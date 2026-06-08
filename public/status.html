@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Status</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 44%, #ffffff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .page {
+      width: min(100%, 960px);
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 44px 120px rgba(15, 23, 42, 0.15);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .hero {
+      padding: 44px 48px;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 3.5vw, 3.8rem);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 760px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .content {
+      display: grid;
+      gap: 30px;
+      padding: 38px 48px 48px;
+    }
+
+    .status-card {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .status-card h2 {
+      margin: 0 0 18px;
+      font-size: 1.35rem;
+      color: #0f172a;
+    }
+
+    .status-info {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: #0f172a;
+      flex: 0 0 160px;
+    }
+
+    .info-value {
+      color: #475569;
+      text-align: right;
+      flex: 1;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-processing {
+      background: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .status-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-failed,
+    .status-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .voucher-display {
+      background: white;
+      border: 2px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .voucher-row {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .voucher-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .voucher-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .voucher-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+      font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+      word-break: break-all;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button-primary {
+      background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
+      color: white;
+      box-shadow: 0 18px 38px rgba(37, 99, 235, 0.18);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 44px rgba(37, 99, 235, 0.24);
+    }
+
+    .button-secondary {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+    }
+
+    .button-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .error-message {
+      background: #fee2e2;
+      border-left: 4px solid #dc2626;
+      padding: 16px;
+      border-radius: 12px;
+      color: #991b1b;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .content {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .page {
+        border-radius: 22px;
+      }
+
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .info-value {
+        text-align: left;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>Payment Status</h1>
+      <p>Check the status of your M-PESA STK request and receive your hotspot voucher once payment is confirmed.</p>
+    </section>
+
+    <section class="content">
+      <div class="status-card">
+        <h2>Order Details</h2>
+        <div class="status-info" id="status-display">
+          <div class="info-row">
+            <span class="info-label">Status</span>
+            <span class="info-value"><div class="status-badge status-pending">Loading…</div></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="button button-secondary" href="/">Return to portal</a>
+        <button class="button button-primary" id="refresh">Refresh payment status</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const merchantRequestID = urlParams.get('merchantRequestID');
+    const statusDisplay = document.getElementById('status-display');
+    const refreshButton = document.getElementById('refresh');
+
+    if (!merchantRequestID) {
+      statusDisplay.innerHTML = `<div class="error-message"><strong>Error:</strong> Missing payment request ID. Please return to the portal and try again.</div>`;
+    }
+
+    function getStatusBadgeClass(status) {
+      const classes = {
+        'pending': 'status-pending',
+        'processing': 'status-processing',
+        'success': 'status-success',
+        'failed': 'status-failed',
+        'error': 'status-error'
+      };
+      return classes[status] || 'status-pending';
+    }
+
+    function capitalizeStatus(status) {
+      return status.charAt(0).toUpperCase() + status.slice(1);
+    }
+
+    async function fetchStatus() {
+      if (!merchantRequestID) return;
+      statusDisplay.innerHTML = '<div class="info-row"><span class="info-label">Status</span><span class="info-value"><div class="status-badge status-processing">Fetching…</div></span></div>';
+
+      try {
+        const response = await fetch(`/api/status/${encodeURIComponent(merchantRequestID)}`);
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Unable to fetch status');
+        }
+
+        let html = `
+          <div class="info-row">
+            <span class="info-label">Status</span>
+            <span class="info-value"><div class="status-badge ${getStatusBadgeClass(result.status)}">${capitalizeStatus(result.status)}</div></span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Package</span>
+            <span class="info-value">${result.package}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Amount</span>
+            <span class="info-value">KES ${result.amount}</span>
+          </div>
+        `;
+
+        if (result.status === 'success' && result.voucher) {
+          html += `
+            <div class="voucher-display">
+              <div class="voucher-row">
+                <div class="voucher-label">Username</div>
+                <div class="voucher-value">${result.voucher.username}</div>
+              </div>
+              <div class="voucher-row">
+                <div class="voucher-label">Password</div>
+                <div class="voucher-value">${result.voucher.password}</div>
+              </div>
+              <div class="voucher-row">
+                <div class="voucher-label">Valid until</div>
+                <div class="voucher-value">${new Date(result.voucher.expiry).toLocaleString()}</div>
+              </div>
+            </div>
+          `;
+        }
+
+        if (result.status === 'failed' || result.status === 'error') {
+          html += `<div class="error-message"><strong>Payment Error:</strong> ${result.result || result.resultDesc || 'Payment not completed. Please try again.'}</div>`;
+        }
+
+        statusDisplay.innerHTML = html;
+      } catch (error) {
+        statusDisplay.innerHTML = `<div class="error-message"><strong>Error:</strong> ${error.message}</div>`;
+      }
+    }
+
+    refreshButton.addEventListener('click', fetchStatus);
+    fetchStatus();
+  </script>
+</body>
+</html>
+    fetchStatus();
+  </script>
+</body>
+</html>

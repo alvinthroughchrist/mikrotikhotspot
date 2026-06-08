@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvin Oundo Hotspot Portal</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 44%, #ffffff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .page {
+      width: min(100%, 960px);
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 44px 120px rgba(15, 23, 42, 0.15);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .hero {
+      padding: 44px 48px;
+      background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      color: white;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 3.5vw, 3.8rem);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 760px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .content {
+      display: grid;
+      gap: 30px;
+      padding: 38px 48px 48px;
+    }
+
+    .overview,
+    .features,
+    .form-card {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .overview h2,
+    .features h2,
+    .form-card h2 {
+      margin: 0 0 18px;
+      font-size: 1.55rem;
+      color: #0f172a;
+    }
+
+    .features ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .features li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    .features li::before {
+      content: "✔";
+      margin-top: 3px;
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      padding: 14px 16px;
+      font-size: 1rem;
+      color: #0f172a;
+      background: white;
+    }
+
+    select {
+      appearance: none;
+    }
+
+    .field {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .button {
+      width: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 38px rgba(37, 99, 235, 0.24);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .hero strong {
+      color: #f8fafc;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .content {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .page {
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>Alvin Oundo Hotspot Portal</h1>
+      <p>Welcome to the Alvin Oundo MikroTik hotspot experience. Pay with Safaricom M-PESA, receive instant Wi-Fi credentials, and enjoy fast access.</p>
+    </section>
+
+    <section class="content">
+      <div class="overview">
+        <h2>Quick access in three steps</h2>
+        <p>Choose a package, enter your phone number, and approve the M-PESA STK prompt. Your hotspot voucher is created automatically after payment.</p>
+      </div>
+
+      <div class="features">
+        <h2>Why choose Alvin Oundo Hotspot?</h2>
+        <ul>
+          <li>Direct M-PESA checkout for secure payments</li>
+          <li>Automatic hotspot user creation</li>
+          <li>Instant credentials delivered after payment</li>
+        </ul>
+      </div>
+
+      <div class="form-card">
+        <h2>Start your payment</h2>
+        <form method="post" action="/api/pay" id="payment-form">
+          <div class="field">
+            <label for="phone">Kenyan phone number</label>
+            <input id="phone" name="phone" placeholder="07XXXXXXXX" required />
+          </div>
+
+          <div class="field">
+            <label for="package">Select access plan</label>
+            <select id="package" name="package">
+              <option value="basic">30 minutes — KES 5</option>
+              <option value="standard" selected>1 hour — KES 10</option>
+              <option value="premium">3 hours — KES 30</option>
+            </select>
+          </div>
+
+          <button class="button" type="submit">Continue to payment portal</button>
+        </form>
+      </div>
+
+      <div class="footer">
+        <div>Need to check payment status? Use the merchant request ID after STK push completes.</div>
+        <div><a class="button" href="/hotspot-login.html">Hotspot login page</a></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Pre-select package from URL parameter if provided
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedPackage = urlParams.get('package');
+    if (selectedPackage && ['basic', 'standard', 'premium'].includes(selectedPackage)) {
+      document.getElementById('package').value = selectedPackage;
+      // Auto-focus phone input for quick payment flow
+      document.getElementById('phone').focus();
+    }
+
+    document.getElementById('payment-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = event.target.querySelector('button');
+      button.disabled = true;
+      button.textContent = 'Sending STK Push...';
+
+      const data = {
+        phone: document.getElementById('phone').value,
+        package: document.getElementById('package').value
+      };
+
+      try {
+        const response = await fetch('/api/pay', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.error || 'Unable to initiate payment');
+        }
+
+        window.location.href = `/status.html?merchantRequestID=${encodeURIComponent(result.merchantRequestID)}`;
+      } catch (error) {
+        button.disabled = false;
+        button.textContent = 'Continue to payment portal';
+        alert(error.message);
+      }
+    });
+  </script>
+</body>
+</html>

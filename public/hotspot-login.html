@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvin Oundo Hotspot</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 32%), linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #e2e8f0 100%); display: grid; place-items: center; padding: 24px; }
+    .card { width: min(100%, 640px); border-radius: 32px; overflow: hidden; background: rgba(255, 255, 255, 0.96); box-shadow: 0 40px 100px rgba(15, 23, 42, 0.2); border: 1px solid rgba(148, 163, 184, 0.18); }
+    .hero { padding: 40px 36px 28px; background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%); color: white; }
+    .hero h1 { margin: 0; font-size: clamp(2.3rem, 3.5vw, 3.6rem); letter-spacing: -0.04em; }
+    .hero p { margin: 18px 0 0; color: #cfe0ff; line-height: 1.75; font-size: 1.05rem; }
+    .content { padding: 32px 34px 36px; display: grid; gap: 20px; }
+    .badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(59, 130, 246, 0.12); color: #1d4ed8; border-radius: 999px; padding: 10px 14px; font-size: 0.95rem; width: fit-content; }
+    .details { display: grid; gap: 14px; color: #334155; line-height: 1.75; font-size: 1rem; }
+    .details strong { color: #0f172a; }
+    .btn-wrap { display: flex; justify-content: center; }
+    .button { display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 260px; border: none; border-radius: 999px; background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%); color: white; font-size: 1rem; font-weight: 700; padding: 16px 22px; text-decoration: none; transition: transform 180ms ease, box-shadow 180ms ease; box-shadow: 0 20px 35px rgba(56, 189, 248, 0.18); }
+    .button:hover { transform: translateY(-1px); box-shadow: 0 24px 40px rgba(56, 189, 248, 0.24); }
+    .footer { display: grid; gap: 8px; font-size: 0.95rem; color: #64748b; }
+    .footer a { color: #2563eb; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .footer small { color: #94a3b8; }
+    @media (max-width: 700px) { .hero, .content { padding-left: 24px; padding-right: 24px; } .card { width: 100%; } }
+  </style>
+</head>
+<body>
+  <article class="card">
+    <section class="hero">
+      <h1>Alvin Oundo Hotspot</h1>
+      <p>Welcome to the premium hotspot access portal. Pay with Safaricom M-PESA and receive instant Wi-Fi credentials for your MikroTik network.</p>
+    </section>
+
+    <section class="content">
+      <span class="badge">Checkout</span>
+
+      <div class="details">
+        <p><strong>Quick and secure:</strong> Select your access plan, approve the M-PESA STK Push, then use your generated hotspot credentials to connect.</p>
+        <p><strong>Instant access:</strong> Your account is created automatically on the MikroTik hotspot once payment is confirmed.</p>
+      </div>
+
+      <div style="display: grid; gap: 12px; margin-top: 20px;">
+        <a class="button" href="/?package=basic" style="background: linear-gradient(90deg, #10b981 0%, #059669 100%);">30 mins — KES 5</a>
+        <a class="button" href="/?package=standard">1 hour — KES 10</a>
+        <a class="button" href="/?package=premium" style="background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);">3 hours — KES 30</a>
+      </div>
+
+      <div class="footer">
+        <p>If you are not on the portal host, update the link to your actual portal URL.</p>
+        <p><a href="/">Refresh portal</a> · <a href="/login">Hotspot login page</a></p>
+      </div>
+    </section>
+  </article>
+</body>
+</html>
